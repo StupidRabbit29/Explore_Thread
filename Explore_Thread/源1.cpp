@@ -45,18 +45,19 @@ unsigned __stdcall time(void* pArguments)
 
 	while (!exit_sign)
 	{
+		if (print_time)
+		{
+			printf("%d\n", time);
+			print_time = false;
+			continue;
+		}
+
 		Sleep(2000);
 
 		if (!time_lock)
 			time++;
 		else
 			printf("Time Locked.\n");
-
-		if (print_time)
-		{
-			printf("%d\n", time);
-			print_time = false;
-		}
 
 	}
 
