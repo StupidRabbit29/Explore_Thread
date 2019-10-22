@@ -70,14 +70,26 @@ unsigned __stdcall time(void* pArguments)
 	return 0;
 }
 
+unsigned __stdcall print(void* pArguments)
+{
+	printf("111\n");
+
+	Sleep(10000);
+	_endthreadex(0);
+	return 0;
+}
+
 int main()
 {   //创建线程1： 
-	HANDLE hRead1 = (HANDLE)_beginthreadex(NULL, 0, getinput, NULL, 0, NULL);
+	HANDLE hRead1 = (HANDLE)_beginthreadex(NULL, 0, print, NULL, 0, NULL);
 	//创建线程2：
-	HANDLE hRead2 = (HANDLE)_beginthreadex(NULL, 0, time, NULL, 0, NULL);
-	WaitForSingleObject(hRead1, INFINITE);
+	HANDLE hRead2 = (HANDLE)_beginthreadex(NULL, 0, print, NULL, 0, NULL);
+	HANDLE hRead3 = (HANDLE)_beginthreadex(NULL, 0, print, NULL, 0, NULL);
+	//WaitForSingleObject(hRead3, INFINITE);
+	CloseHandle(hRead3);
+	//WaitForSingleObject(hRead1, INFINITE);
 	CloseHandle(hRead1);
-	WaitForSingleObject(hRead2, INFINITE);
+	//WaitForSingleObject(hRead2, INFINITE);
 	CloseHandle(hRead2);
 
 	printf("退出系统！\n");
